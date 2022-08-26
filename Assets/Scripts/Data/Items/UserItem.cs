@@ -13,6 +13,7 @@ namespace Data.Items
             timeRepeater
         }
 
+        public long Id { get; private set; }
         public string Name { get; private set; }
         public Sprite Icon { get; private set; }
 

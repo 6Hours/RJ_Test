@@ -8,8 +8,10 @@ namespace Data.Items
     public class MessageItem : BaseItem
     {
         public string Content { get; private set; }
-        public int AuthorId { get; private set; } //may be use long?
+        public UserItem Author { get; private set; } //may be use long?
         public DateTime CreateTime { get; private set; }
+
+        public Action OnDelete;
 
         private MessageItem nextMessage;
         public MessageItem NextMessage
@@ -35,12 +37,20 @@ namespace Data.Items
             }
         }
 
-        public MessageItem(string content, int authorId, DateTime createTime, MessageItem _previousMessage = null)
+        public MessageItem(string content, UserItem author, DateTime createTime, MessageItem _previousMessage = null)
         {
             Content = content;
-            AuthorId = authorId;
+            Author = author;
             CreateTime = createTime;
             PreviousMessage = _previousMessage;
+        }
+
+        public void Delete()
+        {
+            previousMessage.NextMessage = nextMessage;
+            nextMessage.PreviousMessage = previousMessage;
+
+            OnDelete?.Invoke();
         }
     }
 }
