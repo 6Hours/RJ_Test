@@ -7,12 +7,16 @@ namespace Data.Items
     public class ChatItem : BaseItem
     {
         public string ChatName { get; private set; }
+        public UserItem Owner { get; private set; }
 
         public MessageItem LastMessage { get; private set; }
 
-        public ChatItem(string name, MessageItem lastMessage)
+        public System.Action<MessageItem> OnMessageAdded;
+
+        public ChatItem(string name, UserItem owner, MessageItem lastMessage)
         {
             ChatName = name;
+            Owner = owner;
             LastMessage = lastMessage;
 
             if (LastMessage != null)
@@ -28,6 +32,8 @@ namespace Data.Items
             LastMessage.NextMessage = message;
             LastMessage = message;
             LastMessage.OnDelete += OnDelete;
+
+            OnMessageAdded?.Invoke(message);
         }
 
         private void OnDelete()

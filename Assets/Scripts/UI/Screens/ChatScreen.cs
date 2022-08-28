@@ -32,6 +32,14 @@ namespace UI.Screens
             {
                 if (i >= visualizators.Count) 
                     visualizators.Add(Instantiate(visualizators[0], visualizators[0].transform.parent));
+
+                visualizators[i].gameObject.SetActive(lastMsg != null);
+
+                if (lastMsg != null)
+                {
+                    visualizators[i].UpdateItem(lastMsg);
+                    lastMsg = lastMsg.PreviousMessage;
+                }
             }
         }
     }

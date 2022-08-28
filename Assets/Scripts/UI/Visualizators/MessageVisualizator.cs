@@ -49,9 +49,12 @@ namespace UI.Visualizators
             userIcon.enabled = isLastMsg;
             userIcon.sprite = Item.Author.Icon;
 
-            //Background
-            var isOwner = Item.Author.UserRole == UserItem.Role.owner;
 
+            var isOwner = Item.Chat.Owner.Id == Item.Author.Id;
+
+            deleteButton.image.enabled = isOwner;
+            
+            //Background  
             lastBlue.gameObject.SetActive(isOwner && isLastMsg);
             noLastBlue.gameObject.SetActive(isOwner && !isLastMsg);
             lastGrey.gameObject.SetActive(!isOwner && isLastMsg);

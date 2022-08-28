@@ -7,12 +7,17 @@ namespace Data
 {
     public class LocalData : Singleton<LocalData>
     {
-        List<ChatItem> chats = new List<ChatItem>();
+        public Users UsersModel => usersModel;
+        public Chats ChatsModel => chatsModel;
+
+        private Users usersModel = new Users();
+        private Chats chatsModel = new Chats();
 
         public override void Awake()
         {
             base.Awake();
-            
+            usersModel.Initialize();
+            chatsModel.Initialize();
         }
     }
 }
