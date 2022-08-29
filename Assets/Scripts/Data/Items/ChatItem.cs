@@ -6,43 +6,50 @@ namespace Data.Items
 {
     public class ChatItem : BaseItem
     {
+        public long Id { get; private set; }
         public string ChatName { get; private set; }
         public UserItem Owner { get; private set; }
 
         public MessageItem LastMessage { get; private set; }
 
         public System.Action<MessageItem> OnMessageAdded;
+        public System.Action<MessageItem> OnMessageDeleted;
 
-        public ChatItem(string name, UserItem owner, MessageItem lastMessage)
+        public ChatItem(long id, string name, UserItem owner, MessageItem lastMessage)
         {
+            Id = id;
             ChatName = name;
             Owner = owner;
-            LastMessage = lastMessage;
 
-            if (LastMessage != null)
-            {
-                LastMessage.OnDelete += OnDelete;
-            }
+            if(lastMessage != null) AddMessage(lastMessage);
         }
 
         public void AddMessage(MessageItem message)
         {
-            if(LastMessage != null) LastMessage.OnDelete -= OnDelete;
+            message.OnDelete += OnDelete;
 
-            LastMessage.NextMessage = message;
+            if (LastMessage != null)
+            {
+                LastMessage.NextMessage = message;
+            }
+
             LastMessage = message;
-            LastMessage.OnDelete += OnDelete;
 
             OnMessageAdded?.Invoke(message);
         }
 
-        private void OnDelete()
+        public void AddMessage(string content, UserItem author)
         {
-            if (LastMessage != null) LastMessage.OnDelete -= OnDelete;
+            var msg = new MessageItem(content, author, this, System.DateTime.Now, LastMessage);
+            AddMessage(msg);
+        }
+
+        private void OnDelete(MessageItem msg)
+        {
+            if(msg == LastMessage)
+                LastMessage = LastMessage.PreviousMessage;
             
-            LastMessage = LastMessage.PreviousMessage;
-            
-            if (LastMessage != null) LastMessage.OnDelete += OnDelete;
+            OnMessageDeleted?.Invoke(msg);
         }
     }
 }

@@ -296,7 +296,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c311bb180d40b90499ad8924cb2bb8d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroy: 0
+  dontDestroy: 1
+  tempUserItems:
+  - Id: 0
+    Name: Velikopolsky Boris
+    AvatarSprite: {fileID: 21300000, guid: 71e58b8bb5d4e1748bc7b132b11e36ae, type: 3}
+  - Id: 1
+    Name: "\u0425\u0438\u0442\u0440\u044B\u0439 \u041B\u0438\u0441"
+    AvatarSprite: {fileID: 21300000, guid: fe99d334a9f0d9549b3000b0e225191d, type: 3}
+  - Id: 2
+    Name: PikaChu
+    AvatarSprite: {fileID: 21300000, guid: 1019bd44f94c7e14580b176bf4038f32, type: 3}
+  tempChatItems:
+  - Id: 0
+    Name: TestChat
+    OwnerId: 1
+  chatScreen: {fileID: 2094808263}
 --- !u!4 &100075988
 Transform:
   m_ObjectHideFlags: 0
@@ -968,7 +983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211e7b7ef867fe246955f0aec9daabe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroy: 0
+  dontDestroy: 1
 --- !u!4 &661985462
 Transform:
   m_ObjectHideFlags: 0
@@ -1477,8 +1492,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 2164260863
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1495,15 +1510,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2261,7 +2276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1480431947
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2290,8 +2305,8 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480431946}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
+  m_Alpha: 0
+  m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!114 &1480431949
@@ -2657,6 +2672,7 @@ MonoBehaviour:
   noLastBlue: {fileID: 220897052}
   lastGrey: {fileID: 1007108905}
   noLastGrey: {fileID: 711907327}
+  layoutGroup: {fileID: 1872706051}
 --- !u!225 &1872706053
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3176,12 +3192,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualizators:
   - {fileID: 1872706052}
-  createStateContainer: {fileID: 0}
-  inputField: {fileID: 0}
-  sendButton: {fileID: 0}
-  deleteButton: {fileID: 0}
-  deleteStateContainer: {fileID: 0}
-  deleteFinishButton: {fileID: 0}
+  contentRect: {fileID: 1264616763}
+  createStateContainer: {fileID: 671664269}
+  inputField: {fileID: 1020064057}
+  sendButton: {fileID: 1925789576}
+  deleteButton: {fileID: 658156841}
+  deleteStateContainer: {fileID: 1480431948}
+  deleteFinishButton: {fileID: 1427332712}
 --- !u!1 &2098344028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3193,6 +3210,7 @@ GameObject:
   - component: {fileID: 2098344029}
   - component: {fileID: 2098344031}
   - component: {fileID: 2098344030}
+  - component: {fileID: 2098344032}
   m_Layer: 5
   m_Name: Message - Text (TMP)
   m_TagString: Untagged
@@ -3239,7 +3257,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hello world!!!
+  m_text: Message Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3316,6 +3334,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2098344028}
   m_CullTransparentMesh: 1
+--- !u!114 &2098344032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098344028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: 150
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &2130241525
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ namespace Data.Items
         public ChatItem Chat { get; private set; }
         public DateTime CreateTime { get; private set; }
 
-        public Action OnDelete;
+        public Action<MessageItem> OnDelete;
 
         private MessageItem nextMessage;
         public MessageItem NextMessage
@@ -49,10 +49,10 @@ namespace Data.Items
 
         public void Delete()
         {
+            OnDelete?.Invoke(this);
+
             previousMessage.NextMessage = nextMessage;
             nextMessage.PreviousMessage = previousMessage;
-
-            OnDelete?.Invoke();
         }
     }
 }

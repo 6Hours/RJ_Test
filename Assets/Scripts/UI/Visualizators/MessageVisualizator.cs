@@ -23,6 +23,7 @@ namespace UI.Visualizators
         [SerializeField] private Image lastGrey;
         [SerializeField] private Image noLastGrey;
 
+        [SerializeField] private HorizontalLayoutGroup layoutGroup;
         public void Start()
         {
             FadeAnimation(0f, 1f, null);
@@ -44,7 +45,7 @@ namespace UI.Visualizators
             messageContent.text = isLastMsg ? string.Format("<color=#7DC8F8>{0}</color> \n", Item.Author.Name) : string.Empty;  
             messageContent.text += Item.Content;
 
-            messageTime.text = Item.CreateTime.TimeOfDay.ToString();
+            messageTime.text = Item.CreateTime.ToString("T");
 
             userIcon.enabled = isLastMsg;
             userIcon.sprite = Item.Author.Icon;
@@ -52,6 +53,8 @@ namespace UI.Visualizators
 
             var isOwner = Item.Chat.Owner.Id == Item.Author.Id;
 
+            layoutGroup.reverseArrangement = !isOwner;
+            layoutGroup.childAlignment = isOwner? TextAnchor.LowerRight : TextAnchor.LowerLeft;
             deleteButton.image.enabled = isOwner;
             
             //Background  
@@ -63,7 +66,12 @@ namespace UI.Visualizators
 
         private void OnDeleteClick()
         {
-            FadeAnimation(1f, 0f, () => Item.Delete());
+            FadeAnimation(1f, 0f, () =>
+            {
+                transform.SetAsLastSibling();
+                gameObject.SetActive(false);
+                Item.Delete();
+            });
         }
 
         private void FadeAnimation(float beginVal, float endVal, Action callback)

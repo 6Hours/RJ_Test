@@ -16,7 +16,10 @@ namespace Data
 
         private void LoadData(Test_Config_controller.TempUserItem[] items)
         {
-
+            foreach(var item in items)
+            {
+                UsersList.Add(new UserItem(item.Id, item.Name, item.AvatarSprite));
+            }
         }
     }
 }

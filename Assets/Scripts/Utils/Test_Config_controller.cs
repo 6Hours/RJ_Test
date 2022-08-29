@@ -1,6 +1,8 @@
+using Data;
 using Data.Items;
 using System.Collections;
 using System.Collections.Generic;
+using UI.Screens;
 using UnityEngine;
 
 public class Test_Config_controller : Singleton<Test_Config_controller>
@@ -8,17 +10,21 @@ public class Test_Config_controller : Singleton<Test_Config_controller>
     /// <summary>
     ///  остыль дл€ демонстрации тестового задани€
     /// </summary>
+
+    [System.Serializable]
     public struct TempUserItem
     {
-        public string name;
-        public Sprite avatarSprite;
+        public int Id;
+        public string Name;
+        public Sprite AvatarSprite;
     }
 
+    [System.Serializable]
     public struct TempChatItem
     {
-        public string name;
-        public int ownerId;
-
+        public int Id;
+        public string Name;
+        public int OwnerId;
     }
 
     public TempUserItem[] tempUserItems;
@@ -27,31 +33,38 @@ public class Test_Config_controller : Singleton<Test_Config_controller>
     public System.Action<TempUserItem[]> OnUsersInfoReceive;
     public System.Action<TempChatItem[]> OnChatInfoReceive;
 
+    [SerializeField] private ChatScreen chatScreen;
+
+    private List<int> botUsers = new List<int>();
+
     // Start is called before the first frame update
-    private void Start()
+    IEnumerator Start()
     {
-        for(var i = 0; i < tempUserItems.Length; i++)
+        //Bots type sorting
+        foreach (var item in tempUserItems)
         {
-            if(i != tempChatItems[0].ownerId)
+            if (item.Id != tempChatItems[0].OwnerId)
             {
-                if(i % 2 == 0)
-                {
-
-                }
-                else
-                {
-
-                }
+                botUsers.Add(item.Id);
             }
         }
 
         OnUsersInfoReceive?.Invoke(tempUserItems);
-        
+        yield return null;
         OnChatInfoReceive?.Invoke(tempChatItems);
+        yield return null;
+        chatScreen.GenerateMessagesList(null);
+
+        Invoke("InvokeRepeaterBots", 5f);
     }
-
-    private void OnMessageAdded(MessageItem msg)
+    private void InvokeRepeaterBots()
     {
-
+        foreach(var index in botUsers)
+        {
+            var user = LocalData.Instance.UsersModel.UsersList.Find((usr) => usr.Id == index);
+            for(var i = 0; i < Mathf.Max(2, user.Id); i++)
+                LocalData.Instance.ChatsModel.CurrentChat.AddMessage(Random.Range(0, 100).ToString(), user);
+        }
+        Invoke("InvokeRepeaterBots", 10f);
     }
 }

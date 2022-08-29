@@ -9,5 +9,12 @@ namespace Data.Items
         public long Id { get; private set; }
         public string Name { get; private set; }
         public Sprite Icon { get; private set; }
+
+        public UserItem(long id, string name, Sprite icon)
+        {
+            Id = id;
+            Name = name;
+            Icon = icon;
+        }
     }
 }
