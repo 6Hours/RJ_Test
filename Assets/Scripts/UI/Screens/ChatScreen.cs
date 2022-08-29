@@ -87,6 +87,9 @@ namespace UI.Screens
             createStateContainer.interactable = false;
             deleteStateContainer.interactable = false;
 
+            createStateContainer.gameObject.SetActive(true);
+            deleteStateContainer.gameObject.SetActive(true);
+
             DOTween.To(() => 0f, (val) =>
             {
                 createStateContainer.alpha = isDeleteState? 1f - val : val;
@@ -98,6 +101,9 @@ namespace UI.Screens
             {
                 createStateContainer.interactable = !isDeleteState;
                 deleteStateContainer.interactable = isDeleteState;
+
+                createStateContainer.gameObject.SetActive(!isDeleteState);
+                deleteStateContainer.gameObject.SetActive(isDeleteState);
             });
         }
     }

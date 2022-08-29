@@ -59,12 +59,11 @@ public class Test_Config_controller : Singleton<Test_Config_controller>
     }
     private void InvokeRepeaterBots()
     {
-        foreach(var index in botUsers)
-        {
-            var user = LocalData.Instance.UsersModel.UsersList.Find((usr) => usr.Id == index);
-            for(var i = 0; i < Mathf.Max(2, user.Id); i++)
-                LocalData.Instance.ChatsModel.CurrentChat.AddMessage(Random.Range(0, 100).ToString(), user);
-        }
+        var user = LocalData.Instance.UsersModel.UsersList.Find(
+            (usr) => usr.Id == botUsers[Random.Range(0, botUsers.Count)]);
+        var msgsCount = Random.Range(1, 3);
+        for (var i = 0; i < msgsCount; i++)
+            LocalData.Instance.ChatsModel.CurrentChat.AddMessage(Random.Range(0, 100).ToString(), user);
         Invoke("InvokeRepeaterBots", 10f);
     }
 }
