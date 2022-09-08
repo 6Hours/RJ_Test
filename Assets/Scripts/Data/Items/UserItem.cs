@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Data.Items
 {
-    public class UserItem : MonoBehaviour
+    public class UserItem : BaseItem
     {
         public long Id { get; private set; }
         public string Name { get; private set; }
